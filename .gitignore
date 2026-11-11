@@ -1,0 +1,9 @@
+# Never commit secrets or anything a fresh copy can rebuild.
+.env
+.venv/
+models/
+__pycache__/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.hypothesis/

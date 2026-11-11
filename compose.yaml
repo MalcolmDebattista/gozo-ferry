@@ -1,0 +1,33 @@
+include:
+  - monitoring/compose.yaml
+
+services:
+  db:
+    image: postgres:18
+    environment:
+      POSTGRES_USER: gozo
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: gozo
+    volumes:
+      - db-data:/var/lib/postgresql
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "gozo", "-d", "gozo"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  api:
+    build: .
+    image: gozo-ferry:${MODEL_VERSION:-dev}
+    ports:
+      - "8888:8888"
+    environment:
+      MODEL_VERSION: ${MODEL_VERSION:-dev}
+      DATABASE_URL: postgresql://gozo:${DB_PASSWORD}@db:5432/gozo
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  db-data:

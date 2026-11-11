@@ -1,0 +1,34 @@
+# Session 5, Stage 13: GitHub runs the same `make ci` you run on your laptop.
+name: ci
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+  packages: write                  # lets the run's own token push to ghcr.io (used on main only)
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest        # a fresh machine, created for this run and thrown away after it
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - run: make install
+      - run: cp env.example .env  # the code expects a .env; placeholders only, never real secrets
+      - name: Image name in lowercase (registry names must be lowercase)
+        run: echo "IMAGE=ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/gozo-ferry" >> "$GITHUB_ENV"
+      - run: make ci IMAGE="$IMAGE" SOURCE="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY"
+
+      # Only on main, and only if every step above passed: publish the image that was just built and checked.
+      - if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: make publish IMAGE="$IMAGE"

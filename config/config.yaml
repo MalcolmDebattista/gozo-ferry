@@ -1,0 +1,21 @@
+# Shared, non-secret settings
+data_path: "data/gozo_ferry.csv"
+model_path: "models/model.joblib"
+seed: 42
+# Issue a cancellation warning when the predicted probability reaches this value
+warning_threshold: 0.5
+
+# Training window: null trains on every row of data_path.
+# Set a date (YYYY-MM-DD) to train on recent rows only.
+train_start: null
+
+# The frozen holdout: the last eight weeks of 2025 (56 days from 6 November), cut once and never edited.
+# If the file's SHA-256 no longer matches, the gate refuses to run (exit code 2).
+holdout_path: "data/holdout.csv"
+holdout_start: "2025-11-06"
+holdout_sha256: "fa8745708256b933415deaca764ce549328e69344b15280cccc7fa06dfc3d91d"
+
+# The quality gate: which metric blocks a release, and its threshold (see README, "The quality gate").
+# Metrics available: accuracy, precision, recall, f1, roc_auc
+gate_metric: "recall"
+gate_threshold: 0.75

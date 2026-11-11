@@ -1,0 +1,2 @@
+# The holdout is frozen by its SHA-256: never let git convert its line endings.
+data/*.csv -text
