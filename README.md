@@ -174,3 +174,29 @@ temporary token and publishes the image it just built and checked:
 `MODEL_VERSION` follow automatically.
 
 To block merges on a red check, add a branch rule for `main` that requires the `ci` check (Settings > Branches).
+
+## Track and register runs (Stage 14)
+
+An MLflow tracking server and model registry runs as the `mlflow` service, on port 5000. It keeps its records in
+a second Postgres database, `mlflow`, and the model files in the `mlflow-artifacts` volume. Prometheus and Grafana
+now start only when asked (`docker compose --profile monitoring up -d`), to leave memory for MLflow.
+
+```bash
+docker compose up -d db mlflow
+docker compose exec db createdb -U gozo mlflow   # only if the db volume existed before Stage 14
+make register                                   # train, track the run, register it if it passed the gate
+make register TRAIN_START=2025-03-01            # another training window ('none' = every day)
+gozo-registry show                              # versions, their holdout scores, and aliases
+gozo-registry alias champion 2
+```
+
+Every `gozo-train` run records in the `gozo_ferry` experiment:
+
+- **params:** seed, the knots-to-km/h factor (1.852), the warning threshold, the training window and its size;
+- **metrics:** every metric on the frozen holdout (`holdout_recall`, ...);
+- **tags:** the git commit, whether the tree was dirty, the SHA-256 of the data and of the holdout, the gate result,
+  and the logged model's URI.
+
+`gozo-registry register` refuses a run that failed the gate or came from uncommitted changes: it stays tracked, but
+it is never registered. Open the MLflow UI at http://localhost:5000 (from Windows: forward port 5000, or
+`ssh -p 2222 -N -L 5000:localhost:5000 malcolmd@127.0.0.1`).

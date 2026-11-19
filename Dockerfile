@@ -11,7 +11,8 @@ COPY config ./config
 COPY data ./data
 RUN pip install --no-cache-dir --no-deps .
 
-RUN gozo-train
+# Session 6, Stage 14: no tracking server during a build, so this copy of the model is not recorded.
+RUN MLFLOW_TRACKING_URI=none gozo-train
 
 # The version comes from pyproject.toml through `make build`; the API reports it.
 ARG MODEL_VERSION=dev

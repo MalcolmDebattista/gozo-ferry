@@ -45,6 +45,12 @@ def predict(model, X, threshold):
     return (prob >= threshold).astype(int), prob
 
 
+def score(model, X, y, threshold):
+    """Every metric, so the choice of gate metric is visible. gozo-gate and gozo-train both use it (Session 6)."""
+    pred, prob = predict(model, X, threshold)
+    return {name: metric(y, pred, prob) for name, metric in METRICS.items()}
+
+
 def interval(y, pred, prob, name, seed, rounds=1000):
     """A 95 % bootstrap interval for one metric: how far the score could move on another sample of this size."""
     y = np.asarray(y)
@@ -97,7 +103,7 @@ def main(argv=None):
         label = f"random 20 % of the training window ({len(test)} days)"
 
     pred, prob = predict(model, X_test, config["warning_threshold"])
-    metrics = {name: metric(y_test, pred, prob) for name, metric in METRICS.items()}
+    metrics = score(model, X_test, y_test, config["warning_threshold"])
     name, threshold = config["gate_metric"], config["gate_threshold"]
     low, high = interval(y_test, pred, prob, name, seed)
     majority = max(y_test.mean(), 1 - y_test.mean())

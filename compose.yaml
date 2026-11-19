@@ -29,5 +29,25 @@ services:
       db:
         condition: service_healthy
 
+  # Session 6: the tracking server and model registry, on port 5000.
+  mlflow:
+    build: ./mlflow
+    image: gozo-mlflow:3.17.2
+    command: >
+      mlflow server --host 0.0.0.0 --port 5000 --workers 1
+      --backend-store-uri postgresql://gozo:${DB_PASSWORD}@db:5432/mlflow
+      --artifacts-destination /mlartifacts
+      --allowed-hosts "localhost:*,127.0.0.1:*,mlflow:*"
+    environment:
+      MLFLOW_SERVER_ENABLE_JOB_EXECUTION: "false"   # no background job workers: not needed here, and they cost 1.5 GB
+    ports:
+      - "5000:5000"
+    volumes:
+      - mlflow-artifacts:/mlartifacts
+    depends_on:
+      db:
+        condition: service_healthy
+
 volumes:
   db-data:
+  mlflow-artifacts:

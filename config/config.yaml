@@ -19,3 +19,9 @@ holdout_sha256: "fa8745708256b933415deaca764ce549328e69344b15280cccc7fa06dfc3d91
 # Metrics available: accuracy, precision, recall, f1, roc_auc
 gate_metric: "recall"
 gate_threshold: 0.75
+
+# MLflow (Session 6). MLFLOW_TRACKING_URI in .env overrides tracking_uri.
+mlflow:
+  tracking_uri: "http://localhost:5000"
+  experiment: "gozo_ferry"
+  model_name: "gozo_ferry"

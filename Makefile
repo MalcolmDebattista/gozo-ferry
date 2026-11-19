@@ -11,8 +11,10 @@ GIT_SHA := $(shell git rev-parse --short HEAD 2>/dev/null || echo nogit)
 SOURCE ?=
 LABELS := $(if $(SOURCE),--label org.opencontainers.image.source=$(SOURCE))
 GATE_SPLIT ?= holdout
+# Session 6: another training window for one run, e.g. make register TRAIN_START=2025-03-01 (none = every day)
+TRAIN_START ?=
 
-.PHONY: install lint test validate gate build publish up version ci
+.PHONY: install lint test validate gate build publish up version ci train register champion
 
 install:
 	python3 -m pip install -r requirements.txt
@@ -39,6 +41,19 @@ publish:
 
 up:
 	MODEL_VERSION=$(VERSION) docker compose up -d --build
+
+# Session 6: train and track a run, then register it only if it passed the gate and came from committed code.
+train:
+	gozo-train $(if $(TRAIN_START),--train-start $(TRAIN_START))
+
+register: train
+	gozo-registry register
+
+# Point the champion alias at version V and restart the API, which loads it at start-up.
+# Rolling back is the same command with the previous version: make champion V=1
+champion:
+	gozo-registry alias champion $(V)
+	docker compose restart api
 
 version:
 	@echo $(VERSION)

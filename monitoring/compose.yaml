@@ -1,5 +1,6 @@
 services:
   prometheus:
+    profiles: [monitoring]   # off unless you ask: docker compose --profile monitoring up -d
     image: prom/prometheus:v3.13.4
     ports:
       - "9090:9090"
@@ -8,6 +9,7 @@ services:
       - prometheus-data:/prometheus
 
   grafana:
+    profiles: [monitoring]
     image: grafana/grafana:13.2.4
     ports:
       - "3000:3000"

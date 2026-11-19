@@ -7,3 +7,6 @@ CREATE TABLE predictions (
     warning BOOLEAN NOT NULL,
     model_version TEXT NOT NULL
 );
+
+-- MLflow keeps its records in a database of its own, on the same server (Session 6).
+CREATE DATABASE mlflow;
