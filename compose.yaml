@@ -19,15 +19,21 @@ services:
 
   api:
     build: .
-    image: gozo-ferry:${MODEL_VERSION:-dev}
+    image: gozo-ferry:${APP_VERSION:-dev}
     ports:
       - "8888:8888"
     environment:
-      MODEL_VERSION: ${MODEL_VERSION:-dev}
+      APP_VERSION: ${APP_VERSION:-dev}
       DATABASE_URL: postgresql://gozo:${DB_PASSWORD}@db:5432/gozo
+      MLFLOW_TRACKING_URI: http://mlflow:5000
+      MODEL_URI: models:/gozo_ferry@champion    # move the alias, restart the API: that is a rollback
+      MLFLOW_HTTP_REQUEST_MAX_RETRIES: "0"      # fail fast and let the API retry, so /ready reflects reality
+      MLFLOW_HTTP_REQUEST_TIMEOUT: "5"
     depends_on:
       db:
         condition: service_healthy
+      mlflow:
+        condition: service_started
 
   # Session 6: the tracking server and model registry, on port 5000.
   mlflow:

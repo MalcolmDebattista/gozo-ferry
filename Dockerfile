@@ -8,15 +8,14 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY pyproject.toml .
 COPY src ./src
 COPY config ./config
-COPY data ./data
 RUN pip install --no-cache-dir --no-deps .
 
-# Session 6, Stage 14: no tracking server during a build, so this copy of the model is not recorded.
-RUN MLFLOW_TRACKING_URI=none gozo-train
+# Session 6, Stage 15: the image holds code only. The model comes from the registry when the API starts
+# (MODEL_URI, models:/gozo_ferry@champion by default), so a new model needs no new image.
 
-# The version comes from pyproject.toml through `make build`; the API reports it.
-ARG MODEL_VERSION=dev
-ENV MODEL_VERSION=${MODEL_VERSION}
+# The code's version comes from pyproject.toml through `make build`; /ready reports it.
+ARG APP_VERSION=dev
+ENV APP_VERSION=${APP_VERSION}
 
 EXPOSE 8888
 # Exec form: uvicorn runs as PID 1 and gets SIGTERM directly, so docker stop is immediate

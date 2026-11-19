@@ -33,14 +33,14 @@ gate:
 	gozo-gate --split $(GATE_SPLIT)
 
 build:
-	docker build --build-arg MODEL_VERSION=$(VERSION) -t $(IMAGE):$(VERSION) -t $(IMAGE):$(VERSION)-$(GIT_SHA) $(LABELS) .
+	docker build --build-arg APP_VERSION=$(VERSION) -t $(IMAGE):$(VERSION) -t $(IMAGE):$(VERSION)-$(GIT_SHA) $(LABELS) .
 
 publish:
 	docker push $(IMAGE):$(VERSION)
 	docker push $(IMAGE):$(VERSION)-$(GIT_SHA)
 
 up:
-	MODEL_VERSION=$(VERSION) docker compose up -d --build
+	APP_VERSION=$(VERSION) docker compose up -d --build
 
 # Session 6: train and track a run, then register it only if it passed the gate and came from committed code.
 train:

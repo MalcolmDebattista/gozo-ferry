@@ -200,3 +200,22 @@ Every `gozo-train` run records in the `gozo_ferry` experiment:
 `gozo-registry register` refuses a run that failed the gate or came from uncommitted changes: it stays tracked, but
 it is never registered. Open the MLflow UI at http://localhost:5000 (from Windows: forward port 5000, or
 `ssh -p 2222 -N -L 5000:localhost:5000 malcolmd@127.0.0.1`).
+
+## Serve the champion and roll back (Stage 15)
+
+The image now holds code only (`APP_VERSION` is the code's version). When the API starts, it loads
+`models:/gozo_ferry@champion` from the registry in the background:
+
+- `GET /health`: alive (answers at once);
+- `GET /ready`: 503 until a model is loaded, then `{"ready": true, "model_version": "gozo_ferry/2", "app_version": "0.6.0"}`;
+- `POST /predict` answers 503 until then, and every prediction, and every row in `predictions`, carries the
+  registry version that made it.
+
+```bash
+make up                       # db, mlflow, api
+curl localhost:8888/ready
+make champion V=1             # roll back: move the alias, restart the API (no rebuild)
+make champion V=2             # and forward again
+```
+
+The model card is `docs/model_card.md`; attach it to a version with `gozo-registry card 2 docs/model_card.md`.
