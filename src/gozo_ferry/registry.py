@@ -22,6 +22,8 @@ from gozo_ferry.train import LAST_RUN
 
 logger = logging.getLogger(__name__)
 
+CARD_LIMIT = 5000
+
 
 def register(client, config, run_id=None):
     """Register one run: the one named, or the last one gozo-train recorded on this machine."""
@@ -69,7 +71,11 @@ def main(argv=None):
         client.set_registered_model_alias(name, args.name, args.version)
         logger.info("%s@%s -> version %s", name, args.name, args.version)
     elif args.command == "card":
-        client.update_model_version(name, args.version, description=Path(args.path).read_text())
+        text = Path(args.path).read_text(encoding="utf-8")
+        if len(text) > CARD_LIMIT:      # MLflow stores the description in a varchar(5000) column
+            logger.error("%s has %d characters; the registry keeps at most %d", args.path, len(text), CARD_LIMIT)
+            sys.exit(1)
+        client.update_model_version(name, args.version, description=text)
         logger.info("Model card attached to %s version %s", name, args.version)
     elif args.command == "show":
         if not client.search_registered_models(filter_string=f"name='{name}'"):
