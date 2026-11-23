@@ -6,7 +6,7 @@ ports:
   - id: mgarr
     name: Mġarr
     island: Gozo
-    labels: [Mġarr, Mgarr, mgarr, MGARR, Mgarr Harbour, "Mġarr, Gozo"]
+    labels: [Mġarr, Mgarr, mgarr, MGARR, "Mġarr, Gozo"]
   - id: cirkewwa
     name: Ċirkewwa
     island: Malta
