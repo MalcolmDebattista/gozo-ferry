@@ -1,0 +1,6 @@
+# The fleet (Session 7, Stage 16). Fictitious, as is the operations log. labels: how the log writes each vessel.
+
+vessels:
+  - {id: calypso, name: MV Calypso, labels: [MV Calypso]}
+  - {id: dwejra, name: MV Dwejra, labels: [MV Dwejra]}
+  - {id: ramla, name: MV Ramla, labels: [MV Ramla]}

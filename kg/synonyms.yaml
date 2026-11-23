@@ -1,0 +1,24 @@
+# The words staff use in questions (Session 7, Stage 16), each mapped to one port, vessel or reason. A word that is
+# not listed here means nothing to the knowledge route. Matched in lower case.
+
+terms:
+  mġarr: mgarr
+  mgarr: mgarr
+  gozo: mgarr
+  ċirkewwa: cirkewwa
+  cirkewwa: cirkewwa
+  malta: cirkewwa
+  weather: weather
+  wind: wind
+  windy: wind
+  sea: sea
+  swell: sea
+  visibility: visibility
+  fog: visibility
+  technical: technical
+  breakdown: technical
+  mechanical: technical
+  operational: operational
+  calypso: calypso
+  dwejra: dwejra
+  ramla: ramla

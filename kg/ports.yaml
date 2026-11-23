@@ -1,0 +1,13 @@
+# The ports (Session 7, Stage 16). name is the official spelling; labels are every way staff on duty have written
+# the port in the operations log, matched exactly. A spelling that is not listed here stops the link with an error,
+# so a new spelling is added here, by review, rather than guessed.
+
+ports:
+  - id: mgarr
+    name: Mġarr
+    island: Gozo
+    labels: [Mġarr, Mgarr, mgarr, MGARR, Mgarr Harbour, "Mġarr, Gozo"]
+  - id: cirkewwa
+    name: Ċirkewwa
+    island: Malta
+    labels: [Ċirkewwa, Cirkewwa, CIRKEWWA, Cirkewwa terminal]

@@ -1,0 +1,78 @@
+date,time,vessel,departure,reason
+2025-01-03,13:45,MV Calypso,Mgarr,berth occupied
+2025-01-05,5:00,MV Dwejra,Mġarr,heavy swell at harbour entrance
+2025-01-13,7:30,MV Calypso,Ċirkewwa,rough sea
+2025-01-13,10:45,MV Calypso,CIRKEWWA,gale warning
+2025-01-13,17:00,MV Ramla,Cirkewwa,swell over 3 m
+2025-01-15,10:45,MV Calypso,mgarr,swell over 3 m
+2025-01-19,10:45,MV Calypso,CIRKEWWA,bow thruster fault
+2025-01-22,10:45,MV Dwejra,Cirkewwa terminal,heavy swell at harbour entrance
+2025-01-23,12:15,MV Dwejra,CIRKEWWA,heavy swell at harbour entrance
+2025-01-25,6:15,MV Dwejra,CIRKEWWA,rough sea
+2025-01-25,9:00,MV Ramla,Cirkewwa terminal,rough sea
+2025-01-26,7:30,MV Dwejra,Ċirkewwa,rough sea
+2025-01-26,7:30,MV Ramla,Mgarr Harbour,high winds
+2025-01-26,13:45,MV Calypso,"Mġarr, Gozo",strong NW wind
+2025-01-28,10:45,MV Ramla,Cirkewwa,strong NW wind
+2025-01-28,12:15,MV Calypso,mgarr,rough sea
+2025-01-28,13:45,MV Calypso,CIRKEWWA,heavy swell at harbour entrance
+2025-02-07,15:30,MV Dwejra,Ċirkewwa,gale warning
+2025-02-07,17:00,MV Dwejra,MGARR,gusts over 40 knots
+2025-02-08,12:15,MV Calypso,MGARR,high winds
+2025-02-08,15:30,MV Calypso,"Mġarr, Gozo",strong NW wind
+2025-02-10,10:45,MV Ramla,Mgarr,gale warning
+2025-02-10,18:45,MV Ramla,Mgarr,gusts over 40 knots
+2025-02-10,21:00,MV Ramla,CIRKEWWA,rough sea
+2025-02-11,21:00,MV Calypso,Mġarr,gusts over 40 knots
+2025-02-12,7:30,MV Ramla,Cirkewwa,heavy swell at harbour entrance
+2025-02-13,7:30,MV Dwejra,Cirkewwa terminal,rough sea
+2025-02-13,12:15,MV Dwejra,Cirkewwa terminal,gusts over 40 knots
+2025-02-13,17:00,MV Calypso,Cirkewwa terminal,gusts over 40 knots
+2025-02-14,7:30,MV Calypso,Mġarr,rough sea
+2025-02-21,7:30,MV Dwejra,Cirkewwa,engine fault
+2025-02-24,5:00,MV Dwejra,Mgarr Harbour,heavy swell at harbour entrance
+2025-02-24,6:15,MV Ramla,CIRKEWWA,swell over 3 m
+2025-02-24,10:45,MV Calypso,Ċirkewwa,gale warning
+2025-03-01,9:00,MV Dwejra,Mġarr,high winds
+2025-03-03,7:30,MV Ramla,"Mġarr, Gozo",swell over 3 m
+2025-03-03,13:45,MV Dwejra,CIRKEWWA,strong NW wind
+2025-03-04,6:15,MV Calypso,Cirkewwa terminal,rough sea
+2025-03-04,10:45,MV Ramla,Ċirkewwa,heavy swell at harbour entrance
+2025-03-06,10:45,MV Dwejra,Mgarr,swell over 3 m
+2025-03-06,18:45,MV Calypso,Mġarr,heavy swell at harbour entrance
+2025-03-12,5:00,MV Ramla,mgarr,crew shortage
+2025-03-12,21:00,MV Ramla,mgarr,bow thruster fault
+2025-03-29,9:00,MV Calypso,CIRKEWWA,gusts over 40 knots
+2025-03-30,6:15,MV Dwejra,Mgarr,bow thruster fault
+2025-04-08,13:45,MV Ramla,"Mġarr, Gozo",bow thruster fault
+2025-04-17,6:15,MV Calypso,Cirkewwa terminal,poor visibility
+2025-05-09,21:00,MV Dwejra,"Mġarr, Gozo",fog
+2025-06-20,9:00,MV Calypso,CIRKEWWA,fog
+2025-07-10,15:30,MV Ramla,Ċirkewwa,poor visibility
+2025-07-31,5:00,MV Dwejra,CIRKEWWA,berth occupied
+2025-08-17,5:00,MV Dwejra,mgarr,berth occupied
+2025-08-24,6:15,MV Calypso,Cirkewwa terminal,swell over 3 m
+2025-09-24,9:00,MV Ramla,CIRKEWWA,steering alarm
+2025-10-07,6:15,MV Calypso,Cirkewwa,swell over 3 m
+2025-11-07,15:30,MV Ramla,Cirkewwa terminal,crew shortage
+2025-11-09,9:00,MV Ramla,Mġarr,bow thruster fault
+2025-11-15,10:45,MV Calypso,Cirkewwa terminal,high winds
+2025-11-23,21:00,MV Calypso,Mgarr,steering alarm
+2025-11-27,15:30,MV Ramla,Mgarr Harbour,rough sea
+2025-11-27,18:45,MV Ramla,Ċirkewwa,gale warning
+2025-11-28,13:45,MV Dwejra,Ċirkewwa,steering alarm
+2025-12-01,13:45,MV Dwejra,mgarr,gale warning
+2025-12-07,10:45,MV Ramla,CIRKEWWA,bow thruster fault
+2025-12-10,9:00,MV Ramla,CIRKEWWA,gusts over 40 knots
+2025-12-10,12:15,MV Calypso,Cirkewwa terminal,gale warning
+2025-12-13,17:00,MV Dwejra,Cirkewwa terminal,crew shortage
+2025-12-20,5:00,MV Calypso,Ċirkewwa,strong NW wind
+2025-12-20,10:45,MV Calypso,Cirkewwa,swell over 3 m
+2025-12-20,13:45,MV Ramla,CIRKEWWA,strong NW wind
+2025-12-22,13:45,MV Ramla,MGARR,strong NW wind
+2025-12-22,17:00,MV Dwejra,Mgarr,strong NW wind
+2025-12-23,9:00,MV Calypso,Mgarr Harbour,heavy swell at harbour entrance
+2025-12-23,18:45,MV Calypso,Mgarr Harbour,gale warning
+2025-12-23,18:45,MV Ramla,CIRKEWWA,gusts over 40 knots
+2025-12-27,21:00,MV Calypso,Mġarr,rough sea
+2025-12-28,10:45,MV Ramla,Mgarr Harbour,rough sea

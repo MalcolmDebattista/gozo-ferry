@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "gozo_ferry"
-version = "0.6.0"
+version = "0.8.0"
 description = "Predicts Gozo Channel ferry cancellations from daily wind speed"
 requires-python = ">=3.11"
 dependencies = [
@@ -19,6 +19,7 @@ dependencies = [
     "prometheus-client>=0.20",
     "mlflow-skinny==3.17.2",
     "skops>=0.13",
+    "rdflib==7.6.0",
 ]
 
 [project.optional-dependencies]
@@ -35,6 +36,8 @@ gozo-train = "gozo_ferry.train:main"
 gozo-validate = "gozo_ferry.validate:main"
 gozo-gate = "gozo_ferry.evaluate:main"
 gozo-registry = "gozo_ferry.registry:main"
+gozo-ask = "gozo_ferry.ask:main"
+gozo-kg = "gozo_ferry.graph:main"
 
 [tool.ruff]
 line-length = 120

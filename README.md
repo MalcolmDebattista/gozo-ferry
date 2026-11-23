@@ -219,3 +219,29 @@ make champion V=2             # and forward again
 ```
 
 The model card is `docs/model_card.md`; attach it to a version with `gozo-registry card 2 docs/model_card.md`.
+
+## The knowledge layer (Stages 16 and 17)
+
+`data/gozo_operations_2025.csv` logs 77 cancelled crossings in 2025, as staff on duty wrote them: Mġarr is written
+six ways, and none of the 14 reasons says whether it is weather. The knowledge in `kg/` says what the words mean:
+
+| File | What it holds |
+|---|---|
+| `kg/schema.yaml` | Classes (Port, Vessel, Reason, Term, Cancellation), relationships and their cardinalities; the knowledge version |
+| `kg/ports.yaml` | The two ports, each with every spelling the log uses |
+| `kg/vessels.yaml` | The fleet |
+| `kg/reasons.yaml` | The reasons: weather (wind, sea, visibility), technical, operational |
+| `kg/synonyms.yaml` | The words staff use in questions |
+| `kg/questions.yaml` | The competency questions, with answers worked out by hand |
+
+The decision and the key of a cancellation (date + scheduled time + vessel) are in `docs/adr/0001-knowledge-layer.md`.
+
+```bash
+make profile          # how the log writes each port, reason and vessel
+make ask SHOW=--show  # each question through the log alone (keyword) and through the knowledge
+make kg-load          # build the RDF store kg/build/gozo.nt; run it twice: same triples, same SHA-256
+make kg-count         # triples, classes, properties, release and fingerprint
+make kg-ask           # the questions in SPARQL
+make kg-check         # what make ci runs: build from nothing, load again, same SHA-256, every answer right
+make kg-release       # tag kg-v<version> with the store's fingerprint (tests and kg-check first)
+```

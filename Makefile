@@ -14,7 +14,8 @@ GATE_SPLIT ?= holdout
 # Session 6: another training window for one run, e.g. make register TRAIN_START=2025-03-01 (none = every day)
 TRAIN_START ?=
 
-.PHONY: install lint test validate gate build publish up version ci train register champion
+.PHONY: install lint test validate gate build publish up version ci train register champion ask profile kg-version \
+	kg-release kg-load kg-count kg-ask kg-clean kg-check
 
 install:
 	python3 -m pip install -r requirements.txt
@@ -55,8 +56,53 @@ champion:
 	gozo-registry alias champion $(V)
 	docker compose restart api
 
+# Session 7: the staff questions, answered through the log alone and through the operator's knowledge.
+# ROUTE=keyword or ROUTE=knowledge runs one route; SHOW=--show lists what each route counted.
+ROUTE ?= both
+SHOW ?=
+ask:
+	gozo-ask questions --route $(ROUTE) $(SHOW)
+
+profile:
+	gozo-ask profile
+
+# Session 7: the knowledge has a version of its own, kept in one place, kg/schema.yaml, and separate from the code's.
+# A release of the knowledge is an annotated git tag on a commit whose tests pass, and a tag is never reused:
+# git refuses to create one that exists. Push it with: git push origin kg-v$(KG_VERSION)
+KG_VERSION := $(shell sed -n 's/^version: "\(.*\)"$$/\1/p' kg/schema.yaml)
+kg-version:
+	@echo $(KG_VERSION)
+
+# The tag records the fingerprint of the store the release gives.
+STORE_SHA = $$(sha256sum kg/build/gozo.nt | cut -c1-16)
+kg-release: test kg-check
+	@git diff --quiet HEAD || \
+		{ echo "Commit your changes before releasing the knowledge."; exit 1; }
+	git tag -a kg-v$(KG_VERSION) \
+		-m "Gozo ferry knowledge $(KG_VERSION); store sha256 $(STORE_SHA)"
+	@echo "Push the tag with: git push origin kg-v$(KG_VERSION)"
+
+# Session 7, Stage 17: the knowledge layer as an RDF graph, in the store kg/build/gozo.nt.
+# kg-load is safe to run again; kg-clean empties the store, for a rebuild from the files.
+kg-load:
+	gozo-kg load
+
+kg-count:
+	gozo-kg count
+
+kg-ask:
+	gozo-kg ask
+
+kg-clean:
+	rm -f kg/build/gozo.nt
+
+# What make ci checks: the store built from nothing, loaded a second time without change, and the questions
+# answered from the store as written. It leaves that store in kg/build/gozo.nt, the artefact that was checked.
+kg-check:
+	gozo-kg check
+
 version:
 	@echo $(VERSION)
 
 # The whole pipeline, in order. make stops at the first command that exits non-zero.
-ci: lint test validate gate build
+ci: lint test validate gate kg-check build

@@ -1,0 +1,37 @@
+# The taxonomy of cancellation reasons (Session 7, Stage 16).
+#
+# Three top reasons: weather, technical and operational. Weather has three kinds below it: wind, sea and visibility.
+# Every reason written in the operations log is a concept of its own, one level below its kind, so the log's
+# wording is kept and still counts towards every broader reason. labels: how the log writes the reason.
+#
+# Decisions about meaning, owned by the operations manager:
+# - a gale warning is a wind reason (it is issued for wind), although no wind was measured when it was written;
+# - heavy swell at the harbour entrance is a sea reason, not an operational one: the berth was free;
+# - fog and poor visibility are weather, though the wind model of Sessions 2-6 cannot see them.
+
+reasons:
+  - {id: weather, name: Weather}
+  - {id: wind, name: Wind, is_a: weather}
+  - {id: sea, name: Sea state, is_a: weather}
+  - {id: visibility, name: Visibility, is_a: weather}
+  - {id: technical, name: Technical}
+  - {id: operational, name: Operational}
+
+  - {id: gale-warning, name: Gale warning, is_a: wind, labels: [gale warning]}
+  - {id: gusts-over-40-knots, name: Gusts over 40 knots, is_a: wind, labels: [gusts over 40 knots]}
+  - {id: strong-nw-wind, name: Strong north-westerly wind, is_a: wind, labels: [strong NW wind]}
+  - {id: high-winds, name: High winds, is_a: wind, labels: [high winds]}
+
+  - {id: rough-sea, name: Rough sea, is_a: sea, labels: [rough sea]}
+  - {id: harbour-swell, name: Heavy swell at the harbour entrance, is_a: sea, labels: [heavy swell at harbour entrance]}
+  - {id: swell-over-3m, name: Swell over 3 m, is_a: sea, labels: [swell over 3 m]}
+
+  - {id: fog, name: Fog, is_a: visibility, labels: [fog]}
+  - {id: poor-visibility, name: Poor visibility, is_a: visibility, labels: [poor visibility]}
+
+  - {id: bow-thruster-fault, name: Bow thruster fault, is_a: technical, labels: [bow thruster fault]}
+  - {id: steering-alarm, name: Steering alarm, is_a: technical, labels: [steering alarm]}
+  - {id: engine-fault, name: Engine fault, is_a: technical, labels: [engine fault]}
+
+  - {id: berth-occupied, name: Berth occupied, is_a: operational, labels: [berth occupied]}
+  - {id: crew-shortage, name: Crew shortage, is_a: operational, labels: [crew shortage]}

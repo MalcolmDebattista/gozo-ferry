@@ -11,6 +11,10 @@ train_start: null
 
 # The frozen holdout: the last eight weeks of 2025 (56 days from 6 November), cut once and never edited.
 # If the file's SHA-256 no longer matches, the gate refuses to run (exit code 2).
+# The operations log (Session 7): 77 cancelled crossings in 2025, as staff wrote them. Data for the knowledge
+# layer only; it does not change data_path or the holdout.
+operations_path: "data/gozo_operations_2025.csv"
+
 holdout_path: "data/holdout.csv"
 holdout_start: "2025-11-06"
 holdout_sha256: "fa8745708256b933415deaca764ce549328e69344b15280cccc7fa06dfc3d91d"

@@ -1,0 +1,31 @@
+# The schema of the ferry operator's knowledge layer (Session 7, Stage 16): Gozo ferry knowledge v1.0.
+# Written after the competency questions (kg/questions.yaml) and before the instance files, which must conform to
+# it; tests/test_knowledge.py checks every file against it. Owner: the operator's operations manager, who reviews
+# every change.
+#
+# min and max are cardinalities: how many of the relationship each instance of the first class must have.
+# max: null means no upper limit.
+version: "1.0"
+owner: the operations manager
+
+classes:
+  Port:         {key: id, file: kg/ports.yaml, description: a harbour the ferries sail from}
+  Vessel:       {key: id, file: kg/vessels.yaml, description: a ferry in the fleet}
+  Reason:       {key: id, file: kg/reasons.yaml, description: why a crossing was cancelled, a kind of its broader reason}
+  Term:         {key: text, file: kg/synonyms.yaml, description: a word staff use in a question}
+  Cancellation: {key: [date, time, vessel], file: data/gozo_operations_2025.csv,
+                 description: one scheduled crossing that did not sail}
+
+properties:
+  - {class: Port, name: name, type: string, required: true}
+  - {class: Port, name: island, type: string, required: true}
+  - {class: Vessel, name: name, type: string, required: true}
+  - {class: Cancellation, name: date, type: date, required: true}
+  - {class: Cancellation, name: time, type: time, required: true}
+
+relationships:
+  - {name: BROADER, from: Reason, to: [Reason], min: 0, max: 1}
+  - {name: MEANS, from: Term, to: [Port, Vessel, Reason], min: 1, max: 1}
+  - {name: DEPARTS_FROM, from: Cancellation, to: [Port], min: 1, max: 1}
+  - {name: ON_VESSEL, from: Cancellation, to: [Vessel], min: 1, max: 1}
+  - {name: BECAUSE_OF, from: Cancellation, to: [Reason], min: 1, max: 1}

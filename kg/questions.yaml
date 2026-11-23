@@ -1,0 +1,46 @@
+# The questions the operator's staff ask about cancellations (Session 7, Stage 16), with the answers worked out by
+# hand from data/gozo_operations_2025.csv (77 cancelled crossings in 2025). gozo-ask scores each route against them.
+#
+# terms     the words in the question that carry its meaning (kg/synonyms.yaml)
+# field     the log column the keyword route searches
+# kind      count: how many cancellations; most: which vessel has the most
+# expected  the answer
+#
+# How the expected answers were worked out (counts by value from the profile, gozo-ask profile):
+#   mgarr      Mġarr 7 + Mgarr 7 + mgarr 6 + Mgarr Harbour 6 + "Mġarr, Gozo" 5 + MGARR 3                      = 34
+#   weather    wind: gale warning 8 + gusts over 40 knots 8 + strong NW wind 8 + high winds 4                    = 28
+#              sea: rough sea 12 + heavy swell at harbour entrance 9 + swell over 3 m 8                          = 29
+#              visibility: poor visibility 2 + fog 2                                                            =  4
+#                                                                                                         total = 61
+#   technical  bow thruster fault, steering alarm, engine fault: Ramla 5, Dwejra 3, Calypso 2                    = 10
+
+questions:
+  - id: mgarr
+    question: How many crossings from Mġarr were cancelled?
+    terms: [mġarr]
+    field: departure
+    kind: count
+    expected: 34
+
+  - id: weather
+    question: How many cancellations did the weather cause?
+    terms: [weather]
+    field: reason
+    kind: count
+    expected: 61
+
+  - id: technical
+    question: Which vessel had the most technical cancellations?
+    terms: [technical]
+    field: reason
+    kind: most
+    expected: MV Ramla
+
+  # Our own question: the wind model of Sessions 2-6 cannot see fog. Which weather cancellations could it not
+  # have warned about? On all four, the wind log has the day as sailed (cancelled = 0, wind 2.6 to 5.1 knots).
+  - id: visibility
+    question: How many cancellations were caused by poor visibility?
+    terms: [visibility]
+    field: reason
+    kind: count
+    expected: 4
